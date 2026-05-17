@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pakistan Arabic Abaya / Burqa — Market Research Dashboard</title>
+<title>Business Research Hub</title>
 <style>
   :root {
     --bg: #07090f;
@@ -13,15 +13,12 @@
     --gold-dim: #a07830;
     --gold-glow: rgba(201,168,76,0.14);
     --green: #22c55e;
-    --green-dim: rgba(34,197,94,0.14);
-    --red: #ef4444;
-    --blue: #3b82f6;
     --text: #e2e8f0;
     --text-dim: #94a3b8;
     --text-muted: #64748b;
     --border: #1e2d3d;
     --border-bright: #2d3f55;
-    --radius: 10px;
+    --radius: 12px;
     --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,888 +27,186 @@
     background: var(--bg);
     color: var(--text);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.6;
     min-height: 100vh;
   }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
 
-  /* NAV */
-  #nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(7,9,15,0.96);
-    backdrop-filter: blur(12px);
+  header {
     border-bottom: 1px solid var(--border);
-    padding: 0 16px;
-    display: flex; align-items: center; gap: 2px;
-    overflow-x: auto; white-space: nowrap; height: 48px;
+    padding: 28px 40px 24px;
+    background: rgba(7,9,15,0.97);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
   }
-  #nav::-webkit-scrollbar { height: 3px; }
-  .nav-brand {
-    font-size: 13px; font-weight: 700; color: var(--gold);
-    letter-spacing: 0.04em; padding-right: 16px;
-    border-right: 1px solid var(--border); margin-right: 8px; flex-shrink: 0;
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
   }
-  .tab-btn {
-    background: none; border: none; color: var(--text-dim);
-    padding: 6px 13px; border-radius: 6px; cursor: pointer;
-    font-size: 13px; font-weight: 500;
-    transition: all var(--transition); flex-shrink: 0;
+  header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.01em;
   }
-  .tab-btn:hover { color: var(--text); background: var(--border); }
-  .tab-btn.active { color: var(--gold); background: var(--gold-glow); }
+  header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
 
-  /* LAYOUT */
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-
-  /* SECTION HEADER */
-  .section-hdr { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
-  .section-hdr h2 { font-size: 18px; font-weight: 700; color: var(--text); }
-  .section-hdr .count {
-    font-size: 12px; color: var(--text-muted);
-    background: var(--border); padding: 2px 8px; border-radius: 20px;
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 40px;
   }
-  .mt-16 { margin-top: 16px; }
-  .mt-20 { margin-top: 20px; }
-  .mb-8 { margin-bottom: 8px; }
 
-  /* SEARCH / FILTER BAR */
-  .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; align-items: center; }
-  .search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 340px; }
-  .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
-  .search-input {
-    width: 100%; background: var(--card); border: 1px solid var(--border);
-    color: var(--text); padding: 7px 10px 7px 34px;
-    border-radius: 8px; font-size: 13px; outline: none;
-    transition: border-color var(--transition);
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
   }
-  .search-input:focus { border-color: var(--gold-dim); }
-  .search-input::placeholder { color: var(--text-muted); }
-  .filter-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-  .filter-btn {
-    background: var(--card); border: 1px solid var(--border); color: var(--text-dim);
-    padding: 5px 12px; border-radius: 20px; cursor: pointer;
-    font-size: 12px; font-weight: 500; transition: all var(--transition);
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
   }
-  .filter-btn:hover { border-color: var(--gold-dim); color: var(--text); }
-  .filter-btn.active { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
 
-  /* ACCORDION CARDS */
-  .cards-grid { display: grid; gap: 8px; }
-  .acc-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); overflow: hidden;
-    transition: border-color var(--transition), box-shadow var(--transition);
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
   }
-  .acc-card:hover { border-color: var(--border-bright); }
-  .acc-card.authentic {
-    border-color: rgba(34,197,94,0.35);
-    box-shadow: 0 0 0 1px rgba(34,197,94,0.06);
+  .card:hover {
+    border-color: var(--gold-dim);
+    box-shadow: 0 0 0 1px var(--gold-dim), 0 8px 32px rgba(0,0,0,0.4);
+    transform: translateY(-2px);
   }
-  .acc-card.authentic:hover { border-color: rgba(34,197,94,0.6); }
-  .acc-header {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 14px; cursor: pointer; user-select: none; min-height: 52px;
+
+  .card-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--gold-glow);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 3px 8px;
+    width: fit-content;
   }
-  .acc-header:hover .acc-name { color: var(--gold); }
-  .acc-rank { font-size: 11px; color: var(--text-muted); width: 22px; flex-shrink: 0; text-align: right; }
-  .acc-name { font-size: 13px; font-weight: 600; color: var(--text); transition: color var(--transition); flex: 1; min-width: 0; }
-  .acc-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
-  .pill { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
-  .pill-auth { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
-  .pill-pk { background: #1e2d3d; color: var(--text-dim); border: 1px solid var(--border); }
-  .pill-irani { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
-  .pill-wholesale { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
-  .price-badge {
-    background: var(--gold-glow); border: 1px solid rgba(201,168,76,0.3);
-    color: var(--gold); font-size: 11px; font-weight: 600;
-    padding: 2px 8px; border-radius: 6px; white-space: nowrap;
+
+  .card h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
   }
-  .followers-badge { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
-  .city-badge { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 3px; white-space: nowrap; }
-  .chevron { color: var(--text-muted); flex-shrink: 0; transition: transform var(--transition); margin-left: 4px; }
-  .acc-card.open .chevron { transform: rotate(180deg); }
-  .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1); }
-  .acc-card.open .acc-body { max-height: 500px; }
-  .acc-content { padding: 12px 14px 14px; border-top: 1px solid var(--border); }
-  .acc-desc { font-size: 13px; color: var(--text-dim); margin-bottom: 10px; line-height: 1.6; }
-  .acc-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--gold-glow); border: 1px solid rgba(201,168,76,0.4);
-    color: var(--gold); padding: 5px 14px; border-radius: 7px;
-    text-decoration: none; font-size: 12px; font-weight: 600;
-    transition: all var(--transition);
+
+  .card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    flex: 1;
   }
-  .acc-link:hover { background: rgba(201,168,76,0.22); border-color: var(--gold); }
 
-  /* VERDICT BOX */
-  .verdict-box {
-    background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.22);
-    border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
   }
-  .verdict-header {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px 16px; cursor: pointer; user-select: none;
+  .card-meta span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
-  .verdict-header h3 { font-size: 14px; font-weight: 700; color: var(--green); flex: 1; }
-  .verdict-body { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
-  .verdict-box.open .verdict-body { max-height: 700px; }
-  .verdict-content { padding: 14px 16px 16px; border-top: 1px solid rgba(34,197,94,0.12); }
-  .verdict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
-  .verdict-item { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
-  .verdict-item .v-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-  .verdict-item .v-val { font-size: 13px; color: var(--text); line-height: 1.5; }
-  .verdict-item .v-val strong { color: var(--gold); }
-  .verdict-item .v-val .auth-name { color: var(--green); font-weight: 600; }
-
-  /* PRICE / DATA TABLE */
-  .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; overflow-x: auto; }
-  .price-table { width: 100%; border-collapse: collapse; }
-  .price-table th { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
-  .price-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-dim); vertical-align: middle; }
-  .price-table tr:last-child td { border-bottom: none; }
-  .price-table tr:hover td { background: rgba(255,255,255,0.018); }
-  .tier-name { font-weight: 600; color: var(--text); }
-  .tier-range { color: var(--gold); font-size: 12px; }
-  .pct-bar-wrap { display: flex; align-items: center; gap: 8px; }
-  .pct-bar { height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-dim)); flex-shrink: 0; }
-  .pct-label { font-size: 12px; font-weight: 700; color: var(--gold); flex-shrink: 0; }
-
-  /* OVERVIEW STATS */
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 10px; margin-bottom: 20px; }
-  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; text-align: center; }
-  .stat-card .s-val { font-size: 22px; font-weight: 800; color: var(--gold); margin-bottom: 3px; }
-  .stat-card .s-lbl { font-size: 11px; color: var(--text-muted); font-weight: 500; }
-
-  /* GROUP CARDS */
-  .group-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 14px 16px; display: flex; align-items: center; gap: 12px;
-    transition: border-color var(--transition);
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    display: inline-block;
   }
-  .group-card:hover { border-color: var(--border-bright); }
-  .group-icon { width: 36px; height: 36px; background: rgba(59,130,246,0.14); border: 1px solid rgba(59,130,246,0.22); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .group-info { flex: 1; min-width: 0; }
-  .group-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-  .group-meta { font-size: 11px; color: var(--text-muted); }
-  .group-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; background: rgba(59,130,246,0.14); color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); flex-shrink: 0; }
 
-  /* FABRIC TABLE */
-  .fabric-table { width: 100%; border-collapse: collapse; }
-  .fabric-table th { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
-  .fabric-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text-dim); vertical-align: middle; }
-  .fabric-table tr:last-child td { border-bottom: none; }
-  .fabric-table tr:hover td { background: rgba(255,255,255,0.018); }
-  .fabric-name { font-weight: 700; color: var(--text); font-size: 13px; }
-  .fabric-note { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-  .market-bar-wrap { display: flex; align-items: center; gap: 6px; }
-  .market-bar { height: 6px; background: linear-gradient(90deg, var(--gold), var(--gold-dim)); border-radius: 3px; }
-  .market-pct { font-size: 11px; color: var(--gold); font-weight: 700; }
-  .opaque-badge { font-size: 11px; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
-  .op-full { background: rgba(34,197,94,0.14); color: #22c55e; }
-  .op-semi { background: rgba(251,191,36,0.14); color: #fbbf24; }
-  .op-sheer { background: rgba(239,68,68,0.14); color: #ef4444; }
+  .card-arrow {
+    color: var(--gold-dim);
+    font-size: 1rem;
+    transition: transform var(--transition), color var(--transition);
+    align-self: flex-end;
+    margin-top: auto;
+  }
+  .card:hover .card-arrow {
+    transform: translate(3px, -3px);
+    color: var(--gold);
+  }
 
-  /* INSIGHTS */
-  .insights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-  .insight-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; transition: border-color var(--transition); }
-  .insight-card:hover { border-color: var(--border-bright); }
-  .insight-card .i-stat { font-size: 22px; font-weight: 800; color: var(--gold); margin-bottom: 4px; }
-  .insight-card .i-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .insight-card .i-body { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
-
-  /* HOW TO START */
-  .steps-list { display: grid; gap: 12px; }
-  .step-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; transition: border-color var(--transition); }
-  .step-card:hover { border-color: var(--gold-dim); }
-  .step-num { width: 32px; height: 32px; background: var(--gold-glow); border: 1px solid rgba(201,168,76,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--gold); flex-shrink: 0; }
-  .step-content .s-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .step-content .s-body { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
-
-  /* HASHTAGS */
-  .hashtag-groups { display: grid; gap: 10px; }
-  .hg-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
-  .hg-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-  .hashtag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
-  .htag { font-size: 12px; color: var(--blue); background: rgba(59,130,246,0.09); border: 1px solid rgba(59,130,246,0.2); padding: 3px 9px; border-radius: 20px; font-weight: 500; cursor: default; transition: all var(--transition); }
-  .htag:hover { background: rgba(59,130,246,0.18); border-color: rgba(59,130,246,0.4); }
-
-  /* NO RESULTS */
-  .no-results { text-align: center; padding: 32px; color: var(--text-muted); font-size: 13px; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
 
   @media (max-width: 640px) {
-    .acc-meta { gap: 4px; }
-    .city-badge { display: none; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .fabric-table th:nth-child(n+5), .fabric-table td:nth-child(n+5) { display: none; }
+    header { padding: 20px 20px 16px; }
+    main { padding: 32px 20px; }
+    footer { padding: 20px; }
+    .header-inner { flex-direction: column; gap: 4px; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-brand">&#x1F552; Abaya PK Research</div>
-  <button class="tab-btn active" onclick="switchTab(event,'overview')">Overview</button>
-  <button class="tab-btn" onclick="switchTab(event,'fbpages')">FB Pages</button>
-  <button class="tab-btn" onclick="switchTab(event,'fbgroups')">FB Groups</button>
-  <button class="tab-btn" onclick="switchTab(event,'instagram')">Instagram</button>
-  <button class="tab-btn" onclick="switchTab(event,'pricing')">Pricing</button>
-  <button class="tab-btn" onclick="switchTab(event,'fabrics')">Fabrics</button>
-  <button class="tab-btn" onclick="switchTab(event,'insights')">Insights</button>
-  <button class="tab-btn" onclick="switchTab(event,'howtostart')">How to Start</button>
-</nav>
-
-<!-- ======================================================
-     TAB: OVERVIEW
-====================================================== -->
-<div id="tab-overview" class="tab-panel active">
-<div class="container">
-
-  <div class="stats-row">
-    <div class="stat-card"><div class="s-val">30</div><div class="s-lbl">FB Pages Tracked</div></div>
-    <div class="stat-card"><div class="s-val">26</div><div class="s-lbl">IG Accounts Tracked</div></div>
-    <div class="stat-card"><div class="s-val">7</div><div class="s-lbl">Authentic Importers</div></div>
-    <div class="stat-card"><div class="s-val">~60%</div><div class="s-lbl">Ramadan Revenue Share</div></div>
-    <div class="stat-card"><div class="s-val">Rs.3K–5K</div><div class="s-lbl">Market Sweet Spot</div></div>
-    <div class="stat-card"><div class="s-val">40–80%</div><div class="s-lbl">"Saudi" Label Premium</div></div>
+<header>
+  <div class="header-inner">
+    <h1>Business Research Hub</h1>
+    <p>Market intelligence &amp; industry analysis</p>
   </div>
+</header>
 
-  <!-- Verdict Collapsible -->
-  <div class="verdict-box" id="verdictBox">
-    <div class="verdict-header" onclick="toggleVerdict()">
-      <span style="font-size:16px;">&#128269;</span>
-      <h3>Authenticity Verdict — Most Sellers Are Pakistani-Made, Arabic-Inspired (click to expand)</h3>
-      <svg class="chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div class="verdict-body">
-      <div class="verdict-content">
-        <div class="verdict-grid">
-          <div class="verdict-item">
-            <div class="v-label">Key Finding</div>
-            <div class="v-val">The vast majority of Pakistani abaya sellers sell <strong>Pakistani-made</strong> products with Arabic-inspired names and styling. Genuine Gulf/Arabic abayas are rare.</div>
-          </div>
-          <div class="verdict-item">
-            <div class="v-label">Irani Abaya &#8800; Arabic</div>
-            <div class="v-val">Persian chador style. <strong>NOT Gulf Arabic.</strong> Commonly mislabelled — even by buyers.</div>
-          </div>
-          <div class="verdict-item">
-            <div class="v-label">Iraqi Abaya &#8800; Arabic</div>
-            <div class="v-val">Also Persian-influenced. <strong>NOT Khaleeji/Gulf.</strong> A common misconception in PK market.</div>
-          </div>
-          <div class="verdict-item">
-            <div class="v-label">True Arabic = Khaleeji / Gulf</div>
-            <div class="v-val">Sourced from <strong>Saudi Arabia, UAE, or Kuwait</strong>. Open-front silhouette, premium fabrics, Gulf manufacturing.</div>
-          </div>
-          <div class="verdict-item">
-            <div class="v-label">7 Confirmed Authentic Importers</div>
-            <div class="v-val">
-              <span class="auth-name">Abaya Zone</span> (Saudi+UAE) &#183;
-              <span class="auth-name">Naree Abaya</span> &#183;
-              <span class="auth-name">Dresshub.co</span> &#183;
-              <span class="auth-name">Tasamoon Official</span> (all UAE) &#183;
-              <span class="auth-name">Hijabul Ummi</span> (Saudi-made) &#183;
-              <span class="auth-name">AooZle Abaya</span> (Arabian branded) &#183;
-              <span class="auth-name">Al-Harmain Abaya</span> (Karachi, Saudi/Dubai/Irani imports)
-            </div>
-          </div>
-          <div class="verdict-item">
-            <div class="v-label">Abaya.pk Origin Note</div>
-            <div class="v-val">Founded in <strong>Dubai, UAE in 2009</strong>. Now operates from Pakistan. Products are PK-manufactured.</div>
-          </div>
-          <div class="verdict-item">
-            <div class="v-label">Pricing Impact of Labelling</div>
-            <div class="v-val">Calling a PK-made product <strong>"Saudi"</strong> or <strong>"Dubai"</strong> adds a <span style="color:var(--red);font-weight:700;">40–80% price premium</span> in the market.</div>
-          </div>
-        </div>
+<main>
+  <p class="section-label">Research Reports</p>
+  <div class="grid" id="research-grid">
+
+    <a class="card" href="arabic-burqa-pakistan-research/index.html">
+      <span class="card-tag">Fashion &amp; Apparel</span>
+      <h2>Pakistan Arabic Abaya / Burqa Market</h2>
+      <p>Market sizing, competitor landscape, pricing analysis, and growth opportunities for Arabic-style modest wear in Pakistan.</p>
+      <div class="card-meta">
+        <span><span class="dot"></span> Published 2026</span>
+        <span>Pakistan</span>
       </div>
-    </div>
+      <span class="card-arrow">↗</span>
+    </a>
+
+    <!-- Add new research cards below this line following the same pattern -->
+
   </div>
+</main>
 
-  <div class="section-hdr"><h2>Price Distribution by Tier</h2></div>
-  <div class="table-wrap">
-    <table class="price-table">
-      <thead><tr><th>Tier</th><th>Price Range</th><th>Market Share</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td><span class="tier-name">Budget</span></td><td><span class="tier-range">Rs.1,500–3,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:112px;opacity:.75;"></div><span class="pct-label">~28%</span></div></td><td>Small FB sellers, group sellers</td></tr>
-        <tr><td><span class="tier-name">Mid-Core</span></td><td><span class="tier-range">Rs.3,000–5,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:128px;"></div><span class="pct-label">~32%</span></div></td><td><strong style="color:var(--gold)">Sweet spot</strong> — highest buyer volume</td></tr>
-        <tr><td><span class="tier-name">Mid-Upper</span></td><td><span class="tier-range">Rs.5,000–9,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:88px;opacity:.85;"></div><span class="pct-label">~22%</span></div></td><td>Best ROI tier · 25–40% margin</td></tr>
-        <tr><td><span class="tier-name">Premium</span></td><td><span class="tier-range">Rs.9,000–15,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:48px;opacity:.8;"></div><span class="pct-label">~12%</span></div></td><td>Authentic importers · 40–60% margin</td></tr>
-        <tr><td><span class="tier-name">Luxury</span></td><td><span class="tier-range">Rs.15,000–30,000+</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:24px;opacity:.6;"></div><span class="pct-label">~6%</span></div></td><td>Niche only</td></tr>
-      </tbody>
-    </table>
-  </div>
+<footer>
+  Business Research Hub &mdash; umarabdullah23
+</footer>
 
-</div>
-</div>
-
-<!-- ======================================================
-     TAB: FB PAGES
-====================================================== -->
-<div id="tab-fbpages" class="tab-panel">
-<div class="container">
-  <div class="section-hdr"><h2>Facebook Pages</h2><span class="count">30 pages</span></div>
-  <div class="filter-bar">
-    <div class="search-wrap">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input class="search-input" id="fbSearch" type="text" placeholder="Search pages by name or city…" oninput="filterCards('fb')">
-    </div>
-    <div class="filter-btns">
-      <button class="filter-btn active" onclick="setFilter('fb','all',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('fb','authentic',this)">&#10003; Authentic</button>
-      <button class="filter-btn" onclick="setFilter('fb','pk-made',this)">PK-Made</button>
-      <button class="filter-btn" onclick="setFilter('fb','wholesale',this)">Wholesale</button>
-    </div>
-  </div>
-  <div class="cards-grid" id="fbCards"></div>
-  <div class="no-results" id="fbNoResults" style="display:none;">No pages match your search or filter.</div>
-</div>
-</div>
-
-<!-- ======================================================
-     TAB: FB GROUPS
-====================================================== -->
-<div id="tab-fbgroups" class="tab-panel">
-<div class="container">
-  <div class="section-hdr"><h2>Facebook Groups</h2><span class="count">3 groups</span></div>
-  <div style="display:grid;gap:10px;">
-    <div class="group-card">
-      <div class="group-icon">&#128101;</div>
-      <div class="group-info">
-        <div class="group-name">Online Gown / Burqa Store in Pakistan</div>
-        <div class="group-meta">2,100 members &middot; Most relevant buy/sell group in PK</div>
-      </div>
-      <span class="group-tag">Most Relevant</span>
-      <a class="acc-link" href="https://www.facebook.com/groups/search/results/?q=online+burqa+gown+store+pakistan" target="_blank" rel="noopener" style="margin-left:8px;">Visit &#8599;</a>
-    </div>
-    <div class="group-card">
-      <div class="group-icon">&#128717;</div>
-      <div class="group-info">
-        <div class="group-name">Arabic Style Dubai Abaya/Burqa</div>
-        <div class="group-meta">791 members &middot; Niche/targeted — buyers specifically seeking Gulf-style</div>
-      </div>
-      <span class="group-tag">Niche</span>
-      <a class="acc-link" href="https://www.facebook.com/groups/search/results/?q=arabic+style+dubai+abaya+burqa" target="_blank" rel="noopener" style="margin-left:8px;">Visit &#8599;</a>
-    </div>
-    <div class="group-card">
-      <div class="group-icon">&#128081;</div>
-      <div class="group-info">
-        <div class="group-name">Queen Abaya Collection Pakistan</div>
-        <div class="group-meta">Members unknown &middot; Buy/sell/discuss community</div>
-      </div>
-      <span class="group-tag">Community</span>
-      <a class="acc-link" href="https://www.facebook.com/groups/582579383619706/" target="_blank" rel="noopener" style="margin-left:8px;">Visit &#8599;</a>
-    </div>
-  </div>
-  <div class="section-hdr mt-20"><h2>Group Strategy Notes</h2></div>
-  <div class="table-wrap">
-    <table class="price-table">
-      <thead><tr><th>Action</th><th>Detail</th></tr></thead>
-      <tbody>
-        <tr><td class="tier-name">Join all 3 groups immediately</td><td>Start with lurking — no posts yet</td></tr>
-        <tr><td class="tier-name">Observe for 2 weeks</td><td>Understand which styles, questions, and price points get engagement</td></tr>
-        <tr><td class="tier-name">Lead with value first</td><td>Answer fabric questions, share tips — don't just drop product links</td></tr>
-        <tr><td class="tier-name">Best posting times (PKT)</td><td>9–11 AM and 8–10 PM &mdash; highest engagement windows</td></tr>
-        <tr><td class="tier-name">Note competitor prices</td><td>Track what sells, what gets comments, what sizes are asked for</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-
-<!-- ======================================================
-     TAB: INSTAGRAM
-====================================================== -->
-<div id="tab-instagram" class="tab-panel">
-<div class="container">
-  <div class="section-hdr"><h2>Instagram Accounts</h2><span class="count">26 accounts</span></div>
-  <div class="filter-bar">
-    <div class="search-wrap">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input class="search-input" id="igSearch" type="text" placeholder="Search accounts…" oninput="filterCards('ig')">
-    </div>
-    <div class="filter-btns">
-      <button class="filter-btn active" onclick="setFilter('ig','all',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('ig','authentic',this)">&#10003; Authentic</button>
-      <button class="filter-btn" onclick="setFilter('ig','pk-made',this)">PK-Made</button>
-      <button class="filter-btn" onclick="setFilter('ig','wholesale',this)">Wholesale</button>
-    </div>
-  </div>
-  <div class="cards-grid" id="igCards"></div>
-  <div class="no-results" id="igNoResults" style="display:none;">No accounts match your search or filter.</div>
-</div>
-</div>
-
-<!-- ======================================================
-     TAB: PRICING
-====================================================== -->
-<div id="tab-pricing" class="tab-panel">
-<div class="container">
-  <div class="section-hdr"><h2>Price Distribution</h2></div>
-  <div class="table-wrap mb-8">
-    <table class="price-table">
-      <thead><tr><th>Tier</th><th>Range (PKR)</th><th>% of Market</th><th>Margin</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td><span class="tier-name">Budget</span></td><td><span class="tier-range">Rs.1,500–3,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:112px;opacity:.75;"></div><span class="pct-label">28%</span></div></td><td style="color:var(--text-muted);">10–15%</td><td>High volume, low margin — saturated</td></tr>
-        <tr><td><span class="tier-name">Mid-Core</span></td><td><span class="tier-range">Rs.3,000–5,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:128px;"></div><span class="pct-label">32%</span></div></td><td style="color:var(--gold);">15–25%</td><td><strong style="color:var(--gold);">Sweet spot</strong> — highest buyer volume</td></tr>
-        <tr><td><span class="tier-name">Mid-Upper</span></td><td><span class="tier-range">Rs.5,000–9,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:88px;opacity:.85;"></div><span class="pct-label">22%</span></div></td><td style="color:var(--green);">25–40%</td><td><strong style="color:var(--green);">Best ROI for new entrants</strong></td></tr>
-        <tr><td><span class="tier-name">Premium</span></td><td><span class="tier-range">Rs.9,000–15,000</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:48px;opacity:.8;"></div><span class="pct-label">12%</span></div></td><td style="color:var(--green);">40–60%</td><td>Authentic importers only — high trust required</td></tr>
-        <tr><td><span class="tier-name">Luxury</span></td><td><span class="tier-range">Rs.15,000–30,000+</span></td><td><div class="pct-bar-wrap"><div class="pct-bar" style="width:24px;opacity:.6;"></div><span class="pct-label">6%</span></div></td><td style="color:var(--gold);">60%+</td><td>Very niche — Eid/wedding/Umrah</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="section-hdr mt-20"><h2>Per-Brand Verified Pricing</h2></div>
-  <div class="table-wrap">
-    <table class="price-table">
-      <thead><tr><th>#</th><th>Brand</th><th>Price Range</th><th>Type</th><th>Platform</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td class="tier-name">Abaya.pk</td><td class="tier-range">Rs.4,900–10,999</td><td><span class="pill pill-pk">PK-Made</span></td><td>FB + IG</td></tr>
-        <tr><td>2</td><td class="tier-name">Hijab ul Hareem</td><td class="tier-range">Rs.5,300–17,950</td><td><span class="pill pill-pk">PK-Made</span></td><td>FB</td></tr>
-        <tr><td>3</td><td class="tier-name">TGM Basics</td><td class="tier-range">Rs.2,940–8,000</td><td><span class="pill pill-pk">PK-Made</span></td><td>FB</td></tr>
-        <tr><td>4</td><td class="tier-name">Zainab Designer Abaya</td><td class="tier-range">Rs.4,050–7,950</td><td><span class="pill pill-pk">PK-Made</span></td><td>FB</td></tr>
-        <tr><td>5</td><td class="tier-name">Al-Harmain Abaya</td><td class="tier-range">Rs.8,000–18,000</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>FB</td></tr>
-        <tr><td>6</td><td class="tier-name">Abaya Zone Official</td><td class="tier-range">Rs.8,000–18,000</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>FB + IG</td></tr>
-        <tr><td>7</td><td class="tier-name">Hijabul Ummi</td><td class="tier-range">Rs.8,000–15,000</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>FB</td></tr>
-        <tr><td>8</td><td class="tier-name">Tasamoon Official</td><td class="tier-range">Rs.10,000–20,000</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>FB</td></tr>
-        <tr><td>9</td><td class="tier-name">Naree Abaya</td><td class="tier-range">Rs.8,000–18,000</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>IG</td></tr>
-        <tr><td>10</td><td class="tier-name">Dresshub.co</td><td class="tier-range">Rs.8,000–18,000</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>IG</td></tr>
-        <tr><td>11</td><td class="tier-name">darulhijab.pk</td><td class="tier-range">Rs.2,950–8,500</td><td><span class="pill pill-pk">PK-Made</span></td><td>IG</td></tr>
-        <tr><td>12</td><td class="tier-name">hijabeaze</td><td class="tier-range">Rs.7,000–16,000</td><td><span class="pill pill-pk">PK-Made</span></td><td>IG</td></tr>
-        <tr><td>13</td><td class="tier-name">saudiyastore</td><td class="tier-range">Rs.8,000–18,000</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>IG</td></tr>
-        <tr><td>14</td><td class="tier-name">pardah_daari</td><td class="tier-range">Rs.3,000–10,500</td><td><span class="pill pill-pk">PK-Made</span></td><td>IG</td></tr>
-        <tr><td>15</td><td class="tier-name">al.abaati</td><td class="tier-range">Rs.8,500–19,500</td><td><span class="pill pill-pk">PK Premium</span></td><td>IG</td></tr>
-        <tr><td>16</td><td class="tier-name">pinsandpearlsabayas</td><td class="tier-range">Rs.4,500–10,500</td><td><span class="pill pill-pk">PK-Made</span></td><td>IG</td></tr>
-        <tr><td>17</td><td class="tier-name">unique_abaya_store</td><td class="tier-range">Rs.1,500–4,000</td><td><span class="pill pill-pk">Budget</span></td><td>IG</td></tr>
-        <tr><td>18</td><td class="tier-name">ins.abaya</td><td class="tier-range">Rs.12,000–25,000+</td><td><span class="pill pill-auth">&#10003; Authentic</span></td><td>IG</td></tr>
-        <tr><td>19</td><td class="tier-name">mizn.pk</td><td class="tier-range">Rs.4,500–7,500</td><td><span class="pill pill-pk">PK-Made</span></td><td>IG</td></tr>
-        <tr><td>20</td><td class="tier-name">iraniabayastyles</td><td class="tier-range">Rs.2,900–4,500</td><td><span class="pill pill-irani">Irani</span></td><td>IG</td></tr>
-        <tr><td>21</td><td class="tier-name">haadi_online_store</td><td class="tier-range">Rs.2,890–4,500</td><td><span class="pill pill-irani">Irani/Iraqi</span></td><td>IG</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-
-<!-- ======================================================
-     TAB: FABRICS
-====================================================== -->
-<div id="tab-fabrics" class="tab-panel">
-<div class="container">
-  <div class="section-hdr"><h2>Fabric Comparison</h2><span class="count">12 fabrics</span></div>
-  <div class="table-wrap">
-    <table class="fabric-table">
-      <thead>
-        <tr>
-          <th>Fabric</th>
-          <th>Price / Metre</th>
-          <th>GSM</th>
-          <th>Opacity</th>
-          <th>Breathability</th>
-          <th>Market Share</th>
-          <th>Best For</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><div class="fabric-name">Nida (Standard)</div><div class="fabric-note">Most common — 35% of market</div></td>
-          <td style="color:var(--gold);">Rs.300–600</td><td>100–160</td>
-          <td><span class="opaque-badge op-full">Fully Opaque</span></td>
-          <td>&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;&#9679;</span> Moderate</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:70px;"></div><span class="market-pct">~35%</span></div></td>
-          <td>Everyday abayas</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Korean Zoom (Zoom Nida)</div><div class="fabric-note">Crinkle texture, premium everyday</div></td>
-          <td style="color:var(--gold);">Rs.700–1,400</td><td>110–150</td>
-          <td><span class="opaque-badge op-full">Fully Opaque</span></td>
-          <td>&#9679;&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;</span> Good</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:30px;"></div><span class="market-pct">~15%</span></div></td>
-          <td>Premium everyday</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Georgette</div><div class="fabric-note">Needs lining — flowy layered look</div></td>
-          <td style="color:var(--gold);">Rs.300–800</td><td>60–100</td>
-          <td><span class="opaque-badge op-semi">Semi-Sheer</span></td>
-          <td>&#9679;&#9679;&#9679;&#9679;&#9679; Excellent</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:20px;"></div><span class="market-pct">~10%</span></div></td>
-          <td>Layered abayas</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Crepe</div><div class="fabric-note">Formal structured silhouette</div></td>
-          <td style="color:var(--gold);">Rs.300–700</td><td>80–140</td>
-          <td><span class="opaque-badge op-semi">Semi-Opaque</span></td>
-          <td>&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;&#9679;</span> Moderate</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:20px;"></div><span class="market-pct">~10%</span></div></td>
-          <td>Formal abayas</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Chiffon</div><div class="fabric-note">Always needs lining — decorative outer</div></td>
-          <td style="color:var(--gold);">Rs.160–350</td><td>50–80</td>
-          <td><span class="opaque-badge op-sheer">Sheer</span></td>
-          <td>&#9679;&#9679;&#9679;&#9679;&#9679; Excellent</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:16px;"></div><span class="market-pct">~8%</span></div></td>
-          <td>Decorative outer layer</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Saudi Nidah (Premium)</div><div class="fabric-note">Plush suede-like feel — prestigious</div></td>
-          <td style="color:var(--gold);">Rs.800–1,600</td><td>150–200</td>
-          <td><span class="opaque-badge op-full">Fully Opaque</span></td>
-          <td>&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;&#9679;</span> Moderate</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:10px;"></div><span class="market-pct">~5%</span></div></td>
-          <td>Premium / authentic positioning</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Lawn</div><div class="fabric-note">Summer casual — very lightweight</div></td>
-          <td style="color:var(--gold);">Rs.150–500</td><td>50–90</td>
-          <td><span class="opaque-badge op-semi">Semi-Sheer</span></td>
-          <td>&#9679;&#9679;&#9679;&#9679;&#9679; Excellent</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:10px;"></div><span class="market-pct">~5%</span></div></td>
-          <td>Summer abayas</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Khaddar</div><div class="fabric-note">Northern Pakistan — winter use</div></td>
-          <td style="color:var(--gold);">Rs.250–600</td><td>180–280</td>
-          <td><span class="opaque-badge op-full">Fully Opaque</span></td>
-          <td>&#9679;&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;</span> Good</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:8px;"></div><span class="market-pct">~4%</span></div></td>
-          <td>Winter abayas</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Turkish (Nida Turki)</div><div class="fabric-note">Coat-style structured abayas</div></td>
-          <td style="color:var(--gold);">Rs.900–1,800</td><td>140–180</td>
-          <td><span class="opaque-badge op-full">Fully Opaque</span></td>
-          <td>&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;&#9679;</span> Moderate</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:6px;"></div><span class="market-pct">~3%</span></div></td>
-          <td>Coat-style abayas</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Silk / Raw Silk</div><div class="fabric-note">Eid/wedding — luxury positioning</div></td>
-          <td style="color:var(--gold);">Rs.700–2,700+</td><td>60–200</td>
-          <td><span class="opaque-badge op-semi">Semi–Full</span></td>
-          <td>&#9679;&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;</span> Good</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:6px;"></div><span class="market-pct">~3%</span></div></td>
-          <td>Luxury Eid / wedding</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Jersey</div><div class="fabric-note">Prayer / travel abayas</div></td>
-          <td style="color:var(--gold);">Rs.400–900</td><td>150–200</td>
-          <td><span class="opaque-badge op-full">Opaque</span></td>
-          <td>&#9679;&#9679;&#9679;<span style="opacity:.3;">&#9679;&#9679;</span> Moderate</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:4px;"></div><span class="market-pct">~2%</span></div></td>
-          <td>Prayer / travel</td>
-        </tr>
-        <tr>
-          <td><div class="fabric-name">Velvet</div><div class="fabric-note">Winter formal only — heavy weight</div></td>
-          <td style="color:var(--gold);">Rs.500–10,000+</td><td>250–400</td>
-          <td><span class="opaque-badge op-full">Fully Opaque</span></td>
-          <td><span style="opacity:.4;">&#9679;</span><span style="opacity:.3;">&#9679;&#9679;&#9679;&#9679;</span> Poor</td>
-          <td><div class="market-bar-wrap"><div class="market-bar" style="width:4px;"></div><span class="market-pct">~2%</span></div></td>
-          <td>Winter formal only</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-
-<!-- ======================================================
-     TAB: INSIGHTS
-====================================================== -->
-<div id="tab-insights" class="tab-panel">
-<div class="container">
-  <div class="section-hdr"><h2>Key Market Insights</h2></div>
-  <div class="insights-grid">
-    <div class="insight-card"><div class="i-stat">28%</div><div class="i-title">Budget Tier Competition</div><div class="i-body">Rs.1.5K–3K sellers crowd this space — high volume, low margin. Avoid unless you have factory pricing.</div></div>
-    <div class="insight-card"><div class="i-stat">32%</div><div class="i-title">Mid-Core Sweet Spot</div><div class="i-body">Rs.3K–5K is where highest buyer volume sits. Best entry point for new sellers starting out.</div></div>
-    <div class="insight-card"><div class="i-stat">~60%</div><div class="i-title">Ramadan Revenue Share</div><div class="i-body">Nearly 60% of annual abaya revenue generated during Ramadan. Stock up and front-load your ad budget.</div></div>
-    <div class="insight-card"><div class="i-stat">Rs.300–500</div><div class="i-title">WhatsApp Advance Standard</div><div class="i-body">WhatsApp is the real checkout. Rs.300–500 advance is industry standard to confirm and filter serious buyers.</div></div>
-    <div class="insight-card"><div class="i-stat">40–80%</div><div class="i-title">"Saudi" Label Premium</div><div class="i-body">Labelling a PK-made product as "Saudi" or "Dubai" commands a 40–80% higher selling price in PK market.</div></div>
-    <div class="insight-card"><div class="i-stat">15–25%</div><div class="i-title">COD Return Rate</div><div class="i-body">COD return rates run 15–25%. Price it into your COD orders or aggressively push advance payment.</div></div>
-    <div class="insight-card"><div class="i-stat">40–60%</div><div class="i-title">Bundle Order Value Lift</div><div class="i-body">Selling abaya + niqab + gloves as a full set increases average order value 40–60%. Bundle everything.</div></div>
-    <div class="insight-card"><div class="i-stat">3–5+</div><div class="i-title">Abayas Bought Per Year</div><div class="i-body">Women buy 3–5+ abayas per year — high LTV. Invest in WhatsApp broadcast lists for repeat sales with zero CAC.</div></div>
-    <div class="insight-card"><div class="i-stat">35,000+</div><div class="i-title">@abaya_zone Volume Strategy</div><div class="i-body">35,000+ posts generated 106K followers. Consistent, high-volume content creation compounds into a massive audience over time.</div></div>
-    <div class="insight-card"><div class="i-stat">Hajj/Umrah</div><div class="i-title">Profitable Sub-Market</div><div class="i-body">Creates distinct seasonal demand for white/prayer abayas at premium prices. Don't ignore the pilgrimage market.</div></div>
-    <div class="insight-card"><div class="i-stat">High LTV</div><div class="i-title">Repeat Purchase Rate</div><div class="i-body">Repeat purchase rate is high. A returning customer costs nothing to acquire. WhatsApp broadcast lists are your highest-ROI channel.</div></div>
-    <div class="insight-card"><div class="i-stat">25–40%</div><div class="i-title">Mid-Upper ROI Margin</div><div class="i-body">Rs.5K–9K tier gives best ROI for new entrants — enough margin to fund ads, cover returns, and build brand trust.</div></div>
-  </div>
-
-  <div class="section-hdr mt-20"><h2>Hashtag Strategy</h2></div>
-  <div class="hashtag-groups">
-    <div class="hg-card">
-      <div class="hg-label">Primary</div>
-      <div class="hashtag-cloud">
-        <span class="htag">#abaya</span><span class="htag">#abayas</span><span class="htag">#abayafashion</span><span class="htag">#modestfashion</span><span class="htag">#hijab</span><span class="htag">#abayacollection</span>
-      </div>
-    </div>
-    <div class="hg-card">
-      <div class="hg-label">Pakistan-Specific</div>
-      <div class="hashtag-cloud">
-        <span class="htag">#abayapakistan</span><span class="htag">#pakistaniabaya</span><span class="htag">#modestfashionpakistan</span><span class="htag">#abayapk</span><span class="htag">#burqapakistan</span>
-      </div>
-    </div>
-    <div class="hg-card">
-      <div class="hg-label">Gulf / Arabic</div>
-      <div class="hashtag-cloud">
-        <span class="htag">#arabicabaya</span><span class="htag">#khaleejiabaya</span><span class="htag">#abayadubai</span><span class="htag">#abayasaudi</span><span class="htag">#dubaistyleabaya</span>
-      </div>
-    </div>
-    <div class="hg-card">
-      <div class="hg-label">Occasion-Based</div>
-      <div class="hashtag-cloud">
-        <span class="htag">#eidabaya</span><span class="htag">#eidoutfit</span><span class="htag">#umrahoutfit</span><span class="htag">#ramadanfashion</span>
-      </div>
-    </div>
-    <div class="hg-card">
-      <div class="hg-label">Fabric / Style</div>
-      <div class="hashtag-cloud">
-        <span class="htag">#nidafabric</span><span class="htag">#georgette</span><span class="htag">#jilbab</span><span class="htag">#niqab</span><span class="htag">#frontopenaabaya</span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- ======================================================
-     TAB: HOW TO START
-====================================================== -->
-<div id="tab-howtostart" class="tab-panel">
-<div class="container">
-  <div class="section-hdr"><h2>6-Step Launch Playbook</h2></div>
-  <div class="steps-list">
-    <div class="step-card">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <div class="s-title">Build Instagram First — 30 Days Before Buying Any Stock</div>
-        <div class="s-body">Post daily Reels for 30 days before purchasing inventory. Validate demand, build an audience, and see which styles get engagement. Don't risk capital before you have social proof and market validation.</div>
-      </div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <div class="s-title">Source from Deira / Naif Souq Dubai — Al Mandoos Trading LLC</div>
-        <div class="s-body">Deira and Naif Souq in Dubai are the primary wholesale hubs for authentic Gulf abayas. Al Mandoos Trading LLC is a known supplier. Build a relationship with a reliable exporter to secure consistent authentic supply and provenance documentation.</div>
-      </div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <div class="s-title">Set Up WhatsApp Business Properly Before Launch</div>
-        <div class="s-body">Configure a product catalog, quick replies for common questions, and a broadcast list from Day 1. WhatsApp is the real checkout — treat it like your storefront. Rs.300–500 advance is standard to filter serious buyers and reduce fake COD.</div>
-      </div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">4</div>
-      <div class="step-content">
-        <div class="s-title">Join All 3 Facebook Groups — Study for 2 Weeks Before Posting</div>
-        <div class="s-body">Join the Online Gown/Burqa Store, Arabic Style Dubai Abaya, and Queen Abaya Collection groups. Observe buying patterns, price resistance, and top-selling styles for two full weeks. Then engage with value before ever promoting anything.</div>
-      </div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">5</div>
-      <div class="step-content">
-        <div class="s-title">Position Explicitly as Authentic Arabic — Not Irani</div>
-        <div class="s-body">Clearly communicate that your products are Gulf/Khaleeji (Saudi, UAE) — not Irani or Iraqi. This distinction matters to informed buyers and commands a significant premium. Use terms like "Khaleeji," "Gulf-style," "Saudi Nidah," and "UAE import" deliberately and consistently.</div>
-      </div>
-    </div>
-    <div class="step-card">
-      <div class="step-num">6</div>
-      <div class="step-content">
-        <div class="s-title">Always Sell Bundles — Full Sets Increase Order Value 40–60%</div>
-        <div class="s-body">Bundle abaya + niqab + gloves into a complete modest set. Bundles reduce buyer hesitation, increase average order value by 40–60%, and differentiate you from single-item sellers. Offer a modest discount vs. individual prices to drive conversion while maintaining healthy margins.</div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- ======================================================
-     JAVASCRIPT
-====================================================== -->
-<script>
-// ── DATA ────────────────────────────────────────────────────────────────────
-
-var fbData = [
-  {id:1, name:"Abaya.pk", followers:"159K", city:"Karachi (founded Dubai 2009)", price:"Rs.4,900–10,999", type:"pk-made", typeLabel:"PK-Made", desc:"Leading Pakistani modest fashion brand. Founded in Dubai UAE in 2009; now PK-operated. Flagship online abaya store with wide range across mid to premium tiers.", link:"https://www.facebook.com/theabaya.pk/"},
-  {id:2, name:"Aarefa Abaya", followers:"151K", city:"Lahore", price:"Wholesale only", type:"wholesale", typeLabel:"Wholesale", desc:"Pakistani manufacturer since 2000. Wholesale only — primarily supplies retailers and resellers. Not direct-to-consumer retail.", link:"https://www.facebook.com/AarefaAbaya/"},
-  {id:3, name:"Zainab Designer Abaya", followers:"100K", city:"Pakistan", price:"Rs.4,050–7,950", type:"pk-made", typeLabel:"PK-Made", desc:"Popular PK-made abaya brand with designer-inspired styling. Mid-range pricing with strong online following. Broad national reach.", link:"https://www.facebook.com/zainababayacollection/"},
-  {id:4, name:"Tip Top Abaya House", followers:"72K", city:"Karachi", price:"Not listed publicly", type:"pk-made", typeLabel:"PK-Made", desc:"Established Karachi brand with 72K followers. Pricing not listed publicly — DM-based ordering via Facebook. Strong brand recognition.", link:"https://www.facebook.com/tiptopabaya/"},
-  {id:5, name:"Hijab ul Hareem", followers:"60K", city:"Pakistan", price:"Rs.5,300–17,950", type:"pk-made", typeLabel:"PK-Made", desc:"Premium PK-made brand with a wide price range. Targets mid-upper to near-luxury buyers. Strong modesty-forward brand identity.", link:"https://www.facebook.com/Hijabulhareemofficial/"},
-  {id:6, name:"Abaya and Hijab Collection", followers:"49K", city:"Rawalpindi", price:"Not listed publicly", type:"pk-made", typeLabel:"PK-Made", desc:"Rawalpindi-based PK abaya and hijab retailer. Focuses on complete modest wear sets. Growing online following.", link:"https://www.facebook.com/Abaya.and.Hijab.Collection"},
-  {id:7, name:"Khaleeji Abaya By Noor", followers:"32K", city:"Pakistan", price:"Premium", type:"pk-made", typeLabel:"PK-Made Khaleeji Style", desc:"Specialises in Khaleeji (Gulf-inspired) abaya styles. PK-made but authentic Gulf aesthetic. Premium positioning and pricing.", link:"https://www.facebook.com/p/Khaleeji-Abaya-By-Noor-100064603572914/"},
-  {id:8, name:"Tahir Qadri Abayat", followers:"28K", city:"Karachi", price:"Mid-Premium", type:"pk-made", typeLabel:"PK-Made", desc:"Karachi-based mid-to-premium abaya retailer under TQ brand. Targets modest fashion-conscious buyers with quality PK-made products.", link:"https://www.facebook.com/TQabayat/"},
-  {id:9, name:"TGM Basics", followers:"27K", city:"Karachi (7 outlets)", price:"Rs.2,940–8,000", type:"pk-made", typeLabel:"PK-Made", desc:"Multi-outlet Karachi brand with 7 physical stores. Wide price range from budget to mid-upper. Strong local retail and online presence.", link:"https://www.facebook.com/tgmbasics/"},
-  {id:10, name:"Ayeza Abayas", followers:"17K", city:"Islamabad", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Islamabad-based abaya brand targeting capital city buyers. Mid-range pricing with a growing social media following.", link:"https://www.facebook.com/AyezaAbayaOfficial/"},
-  {id:11, name:"AooZle Abaya – Pakistan", followers:"11K", city:"Pakistan", price:"Premium (authentic)", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"Confirmed authentic Arabian importer. Stocks genuine Gulf abayas under Arabian branding for the Pakistani market. Premium tier pricing.", link:"https://www.facebook.com/AooZleAbayas/"},
-  {id:12, name:"DUBAI BURQA", followers:"9.1K", city:"Karachi", price:"Budget-Mid", type:"wholesale", typeLabel:"PK Wholesale", desc:"Dubai-branded but PK wholesale seller. Targets budget to mid-range buyers in Karachi. Dubai label used for market positioning premium.", link:"https://www.facebook.com/dubaiburqa01/"},
-  {id:13, name:"Hijab and Co", followers:"9.3K", city:"Karachi", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Karachi-based hijab and abaya retailer. PK-made products across mid-range pricing. Covers both hijab and abaya categories.", link:"https://www.facebook.com/hijabandco01/"},
-  {id:14, name:"Hijabeez – Irani Chadar", followers:"8.9K", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"Irani Style (NOT Arabic)", desc:"Specialises in Irani-style chadar/abaya. NOT Arabic or Gulf — this is Persian chador style, distinct from Khaleeji abayas. Often mislabelled.", link:"https://www.facebook.com/p/Hijabeez-Irani-chadar-100064105712522/"},
-  {id:15, name:"Maqnaa Abaya", followers:"7.4K", city:"Karachi", price:"Budget-Mid", type:"wholesale", typeLabel:"PK Wholesale", desc:"PK wholesale abaya seller based in Karachi. Budget to mid-range pricing. Bulk-friendly for small retailers.", link:"https://www.facebook.com/Maqnaa.Abaya/"},
-  {id:16, name:"HAYA NOOR Abayas", followers:"6.2K", city:"Karachi", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Karachi-based PK abaya brand with modest, everyday styling focus. Mid-range pricing for everyday buyers.", link:"https://www.facebook.com/hayanoorabayas/"},
-  {id:17, name:"Al-Harmain Abaya", followers:"4.1K", city:"Karachi", price:"Rs.8,000–18,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"CONFIRMED authentic importer in Karachi. Stocks genuine Saudi, Dubai, and Irani imported abayas. Premium pricing is justified by real imports with provenance.", link:"https://www.facebook.com/p/Al-harmain-abaya-100054351678287/"},
-  {id:18, name:"Al-Jadeed Abaya", followers:"4K", city:"Karachi", price:"Wholesale", type:"wholesale", typeLabel:"PK Manufacturer", desc:"Karachi-based PK manufacturer offering wholesale pricing. B2B focused — supplies smaller retailers and resellers nationwide.", link:"https://www.facebook.com/AlJadeedAbaya1/"},
-  {id:19, name:"Hijab-ul-Rahma Al Abayat", followers:"4.5K", city:"Lahore", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Lahore-based abaya and hijab brand with religious/modesty-focused branding. Mid-range PK-made products.", link:"https://www.facebook.com/hijabulrahma/"},
-  {id:20, name:"Saudi Abaya Sale", followers:"4.8K", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"Saudi-Style PK", desc:"Saudi-labelled but likely PK-made. Uses Saudi branding to command a modest premium in the mid-range market.", link:"https://www.facebook.com/SaudiAbayaSale/"},
-  {id:21, name:"Dubai Abaya Wholesale", followers:"3.6K", city:"Pakistan", price:"Wholesale (NIDA fabric)", type:"wholesale", typeLabel:"PK Wholesale", desc:"PK wholesale seller specialising in NIDA fabric abayas with Dubai branding. Targets resellers and small retailers nationwide.", link:"https://www.facebook.com/DubaiAbayaWholesale/"},
-  {id:22, name:"Abaya Zone Official", followers:"676", city:"Lahore + Jeddah", price:"Rs.8,000–18,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"CONFIRMED authentic importer with presence in both Lahore (Pakistan) and Jeddah (Saudi Arabia). Stocks genuine Saudi and UAE abayas with real documentation.", link:"https://www.facebook.com/abayazone.official/"},
-  {id:23, name:"Hijabul Ummi", followers:"1.97K", city:"Karachi", price:"Rs.8,000–15,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"CONFIRMED made-in-Saudi-Arabia abayas sold in Pakistan. One of the very few verified Saudi-manufactured importers in the PK market.", link:"https://www.facebook.com/hijabulummipk/"},
-  {id:24, name:"Tasamoon Official", followers:"Unknown", city:"Pakistan", price:"Rs.10,000–20,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"All stock sourced directly from UAE. CONFIRMED authentic importer. Premium pricing tier for genuine Gulf abayas with UAE provenance.", link:"https://www.facebook.com/tasamoonofficial/"},
-  {id:25, name:"Abeeshah Saudi Abayas", followers:"525", city:"Karachi Lines", price:"Mid range", type:"pk-made", typeLabel:"Saudi Collection", desc:"Small seller offering Saudi-style abaya collection from Karachi Lines area. Saudi labelling used for premium market positioning.", link:"https://www.facebook.com/search/pages/?q=abeeshah+saudi+abayas"},
-  {id:26, name:"Abaya By Misha", followers:"504", city:"Pakistan", price:"Budget-Mid", type:"pk-made", typeLabel:"PK-Made", desc:"Small PK-made abaya seller in budget to mid-range tier. Early-stage brand building with an online-first approach.", link:"https://www.facebook.com/search/pages/?q=abaya+by+misha"},
-  {id:27, name:"Al-Banoor Dubai Abaya", followers:"432", city:"UAE-based", price:"UAE pricing", type:"authentic", typeLabel:"UAE Manufacturer", desc:"UAE-based abaya manufacturer. UAE pricing structure. Serves the Pakistani diaspora and importers who want direct-from-Dubai sourcing.", link:"https://www.facebook.com/search/pages/?q=al+banoor+dubai+abaya"},
-  {id:28, name:"Riwaj Abaya Collection", followers:"Unknown", city:"Karachi", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Karachi-based PK abaya brand blending traditional and modern styling. Mid-range market targeting everyday buyers.", link:"https://www.facebook.com/RiwajAbayaCollection/"},
-  {id:29, name:"Parizara", followers:"Active ads", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"PK-Made w/ Saudi Nidah", desc:"PK-made abayas using Saudi Nidah fabric for a premium feel at mid-range prices. Running active Facebook ad campaigns.", link:"https://parizara.pk"},
-  {id:30, name:"BURQA SAHAB", followers:"Unknown", city:"Karachi (Royal Icon Mall)", price:"Mid range", type:"pk-made", typeLabel:"ZAFAR ABAYA Brand", desc:"Physical store at Royal Icon Mall, Karachi. ZAFAR ABAYA branded products. Combined walk-in and online presence.", link:"https://www.facebook.com/search/pages/?q=burqa+sahab+karachi"}
-];
-
-var igData = [
-  {id:1, name:"@abaya.pk", followers:"144K", city:"Karachi", price:"Rs.4,900–10,999", type:"pk-made", typeLabel:"PK-Made", desc:"Leading Pakistani modest fashion IG. 2,444 posts. Founded in Dubai 2009, now PK-operated. Flagship brand spanning everyday to premium abayas.", link:"https://www.instagram.com/abaya.pk/"},
-  {id:2, name:"@darulhijab.pk", followers:"124K", city:"Pakistan", price:"Rs.2,950–8,500", type:"pk-made", typeLabel:"PK-Made", desc:"36,000+ customers served. Rs.300 advance is standard. Mass-market PK brand with high-volume sales and a loyal customer base.", link:"https://www.instagram.com/darulhijab.pk/"},
-  {id:3, name:"@wholesale_abaya_hijabs", followers:"117K", city:"Pakistan", price:"Wholesale contact", type:"wholesale", typeLabel:"PK Wholesale", desc:"Wholesale supplier of abayas, hijabs, and jilbabs in bulk. Primarily targets retailers and resellers across Pakistan.", link:"https://www.instagram.com/wholesale_abaya_hijabs/"},
-  {id:4, name:"@hijabeaze", followers:"115K", city:"Pakistan", price:"Rs.7,000–16,000", type:"pk-made", typeLabel:"PK-Made", desc:"Celebrity brand by actress Urooj Nasir. Premium PK-made positioning. Website: hijabeaze.com. Influencer-led content drives strong conversion.", link:"https://www.instagram.com/hijabeaze/"},
-  {id:5, name:"@saudiyastore", followers:"114K", city:"Pakistan", price:"Rs.8,000–18,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"CONFIRMED Saudi distributor with 114K followers. One of the largest authentic importers on Pakistani Instagram. Real Saudi sourcing and provenance.", link:"https://www.instagram.com/saudiyastore/"},
-  {id:6, name:"@abaya_zone", followers:"106K", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"35,000+ posts generating 106K followers. Pure volume-first content strategy. General PK-made styles across all price points — content is the moat.", link:"https://www.instagram.com/abaya_zone/"},
-  {id:7, name:"@pardah_daari", followers:"95K", city:"Pakistan", price:"Rs.3,000–10,500", type:"pk-made", typeLabel:"PK-Made", desc:"'Modest wear for every role.' Website: pardahdaari.com. Wide range from budget to mid-upper. Strong lifestyle branding for modern modest women.", link:"https://www.instagram.com/pardah_daari/"},
-  {id:8, name:"@the_hijjabeez", followers:"88K", city:"Karachi", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Based at Gul Tijarah Mall, Karachi. 797 posts. Physical + online presence. Community-focused modest wear brand.", link:"https://www.instagram.com/the_hijjabeez/"},
-  {id:9, name:"@al.abaati", followers:"81K", city:"Pakistan", price:"Rs.8,500–19,500", type:"pk-made", typeLabel:"PK-Made Premium", desc:"Women-empowering brand with global delivery. Premium PK-made abayas positioned at near-authentic pricing. Strong brand values.", link:"https://www.instagram.com/al.abaati/"},
-  {id:10, name:"@rhkabayas", followers:"80K", city:"Karachi (DHA)", price:"Not listed", type:"pk-made", typeLabel:"PK-Made", desc:"Hajj/Umrah specialist based in DHA Karachi. Serves the pilgrimage market with travel-friendly abaya designs. Premium niche positioning.", link:"https://www.instagram.com/rhkabayas/"},
-  {id:11, name:"@abaya_collection_by_jb", followers:"76K", city:"Lahore", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Lahore-based versatile abaya range. Mid-range pricing across everyday and occasion styles. Strong Lahore market penetration.", link:"https://www.instagram.com/abaya_collection_by_jb/"},
-  {id:12, name:"@abaya.trends", followers:"71K", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Trend-led content machine with 2,044 posts. Tracks international abaya trends and produces PK-made versions. High engagement through trend relevance.", link:"https://www.instagram.com/abaya.trends/"},
-  {id:13, name:"@nareeabaya__", followers:"59K", city:"Pakistan", price:"Rs.8,000–18,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"CONFIRMED Dubai and Saudi importer. Separate catalog account available. Premium authentic positioning with real Gulf sourcing. One of the key players.", link:"https://www.instagram.com/nareeabaya__/"},
-  {id:14, name:"@pinsandpearlsabayas", followers:"57K", city:"Pakistan", price:"Rs.4,500–10,500", type:"pk-made", typeLabel:"PK-Made", desc:"'Modestly Chic' brand with worldwide shipping. Mid-range PK-made with international reach and a polished, lifestyle-forward aesthetic.", link:"https://www.instagram.com/pinsandpearlsabayas/"},
-  {id:15, name:"@unique_abaya_store", followers:"56K", city:"Pakistan", price:"Rs.1,500–4,000", type:"pk-made", typeLabel:"PK Budget", desc:"Budget-focused abaya brand. 1,856 posts. 'Burqa Looks' concept. High-volume budget-tier targeting price-sensitive mass-market buyers.", link:"https://www.instagram.com/unique_abaya_store/"},
-  {id:16, name:"@dresshub.co", followers:"55K", city:"Pakistan", price:"Rs.8,000–18,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"CONFIRMED exclusive imports from Saudi Arabia and Dubai. Clean branding, verified authentic product sourcing with real Gulf provenance.", link:"https://www.instagram.com/dresshub.co/"},
-  {id:17, name:"@mizn.pk", followers:"32K", city:"Pakistan", price:"Rs.4,500–7,500", type:"pk-made", typeLabel:"PK-Made", desc:"Arabic-named collections. Website: miznabaya.com. Mid-range PK-made brand using Arabic aesthetic and naming convention strategically.", link:"https://www.instagram.com/mizn.pk/"},
-  {id:18, name:"@theburqashop", followers:"28K", city:"Lahore", price:"Not listed publicly", type:"pk-made", typeLabel:"PK Luxury", desc:"Luxury multi-brand boutique in Lahore. 1,292 posts. High-end curated selection across multiple brands. Lahore's premium modest wear destination.", link:"https://www.instagram.com/theburqashop/"},
-  {id:19, name:"@hm_abayas", followers:"11K", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"500+ customers nationwide. Small but growing PK brand with solid customer satisfaction record and mid-range pricing.", link:"https://www.instagram.com/hm_abayas/"},
-  {id:20, name:"@abayazone.official", followers:"8.2K", city:"Lahore + Jeddah", price:"Rs.8,000–18,000", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"CONFIRMED authentic importer with offices in Lahore and Jeddah. Real Saudi and UAE stock. Premium pricing fully justified by genuine sourcing.", link:"https://www.instagram.com/abayazone.official/"},
-  {id:21, name:"@ins.abaya", followers:"6.9K", city:"Pakistan", price:"Rs.12,000–25,000+", type:"authentic", typeLabel:"✓ AUTHENTIC", desc:"Saudi Luxury Hub. Highest price point among confirmed authentic IG accounts. Ultra-premium Gulf abayas for the luxury segment of the PK market.", link:"https://www.instagram.com/ins.abaya/"},
-  {id:22, name:"@abaya_collection_pakistan", followers:"9.3K", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"Growing PK abaya account with 410 posts. Mid-range general styles targeting everyday modest wear buyers across Pakistan.", link:"https://www.instagram.com/abaya_collection_pakistan/"},
-  {id:23, name:"@iraniabayastyles", followers:"Unknown", city:"Pakistan", price:"Rs.2,900–4,500", type:"pk-made", typeLabel:"Irani (NOT Arabic)", desc:"Persian chador specialist. NOT Arabic or Gulf Khaleeji. Irani style is a distinct category — Persian-influenced styling, not Gulf. Budget to mid pricing.", link:"https://www.instagram.com/iraniabayastyles/"},
-  {id:24, name:"@haadi_online_store", followers:"Unknown", city:"Pakistan", price:"Rs.2,890–4,500", type:"pk-made", typeLabel:"Irani/Iraqi (NOT Arabic)", desc:"Price-list post style. Sells Irani and Iraqi style abayas — NOT Gulf Arabic. WA: 0312-1460207. Budget to mid pricing range.", link:"https://www.instagram.com/explore/tags/abayapakistan/"},
-  {id:25, name:"@kabayasofficial", followers:"Unknown", city:"Karachi", price:"Premium designer", type:"pk-made", typeLabel:"PK-Made", desc:"K.Abayas by Kanwal Ahmed, Karachi. Designer-label PK brand. Premium positioning through a named celebrity-designer collaboration.", link:"https://www.instagram.com/kabayasofficial/"},
-  {id:26, name:"@abaya_zone (general)", followers:"106K", city:"Pakistan", price:"Mid range", type:"pk-made", typeLabel:"PK-Made", desc:"High-volume content account. Posts across all abaya categories and styles. The benchmark case for volume-driven audience building in PK abaya niche.", link:"https://www.instagram.com/abaya_zone/"}
-];
-
-// ── STATE ────────────────────────────────────────────────────────────────────
-
-var state = {
-  fb: { filter: 'all', search: '' },
-  ig: { filter: 'all', search: '' }
-};
-
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-
-function pillHtml(type, typeLabel) {
-  if (type === 'authentic') return '<span class="pill pill-auth">&#10003; Authentic</span>';
-  if (type === 'wholesale') return '<span class="pill pill-wholesale">Wholesale</span>';
-  if (typeLabel && (typeLabel.toLowerCase().indexOf('irani') >= 0 || typeLabel.toLowerCase().indexOf('iraqi') >= 0))
-    return '<span class="pill pill-irani">Irani/Iraqi</span>';
-  return '<span class="pill pill-pk">PK-Made</span>';
-}
-
-function chevronSvg() {
-  return '<svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
-}
-
-function renderCard(item, idx, prefix) {
-  var isAuth = item.type === 'authentic';
-  var cardClass = isAuth ? 'acc-card authentic' : 'acc-card';
-  var id = prefix + '-card-' + item.id;
-  var cityHtml = item.city ? '<span class="city-badge">&#128205; ' + item.city + '</span>' : '';
-  var follHtml = item.followers ? '<span class="followers-badge">&#128101; ' + item.followers + '</span>' : '';
-  var priceHtml = item.price ? '<span class="price-badge">' + item.price + '</span>' : '';
-  return '<div class="' + cardClass + '" id="' + id + '" data-type="' + item.type + '" data-name="' + item.name.toLowerCase() + '" data-label="' + (item.typeLabel||'').toLowerCase() + '" data-city="' + (item.city||'').toLowerCase() + '">'
-    + '<div class="acc-header" onclick="toggleCard(\'' + id + '\')">'
-    + '<span class="acc-rank">' + (idx+1) + '</span>'
-    + '<span class="acc-name">' + item.name + '</span>'
-    + '<div class="acc-meta">' + follHtml + cityHtml + priceHtml + pillHtml(item.type, item.typeLabel) + '</div>'
-    + chevronSvg()
-    + '</div>'
-    + '<div class="acc-body">'
-    + '<div class="acc-content">'
-    + '<div class="acc-desc">' + item.desc + '</div>'
-    + '<a class="acc-link" href="' + item.link + '" target="_blank" rel="noopener">Visit Page &#8599;</a>'
-    + '</div></div></div>';
-}
-
-function renderAll(data, containerId, noResultsId, ns) {
-  var s = state[ns];
-  var container = document.getElementById(containerId);
-  var noRes = document.getElementById(noResultsId);
-  var filtered = data.filter(function(item) {
-    var q = s.search;
-    var matchSearch = !q
-      || item.name.toLowerCase().indexOf(q) >= 0
-      || (item.city||'').toLowerCase().indexOf(q) >= 0
-      || (item.typeLabel||'').toLowerCase().indexOf(q) >= 0
-      || (item.desc||'').toLowerCase().indexOf(q) >= 0;
-    var matchFilter = s.filter === 'all'
-      || (s.filter === 'authentic' && item.type === 'authentic')
-      || (s.filter === 'pk-made' && item.type === 'pk-made')
-      || (s.filter === 'wholesale' && item.type === 'wholesale');
-    return matchSearch && matchFilter;
-  });
-  if (filtered.length === 0) {
-    container.innerHTML = '';
-    noRes.style.display = 'block';
-  } else {
-    noRes.style.display = 'none';
-    container.innerHTML = filtered.map(function(item, idx) { return renderCard(item, idx, ns); }).join('');
-  }
-}
-
-// ── TAB SWITCHING ────────────────────────────────────────────────────────────
-
-function switchTab(e, name) {
-  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-  document.getElementById('tab-' + name).classList.add('active');
-  e.target.classList.add('active');
-}
-
-// ── ACCORDION ────────────────────────────────────────────────────────────────
-
-function toggleCard(id) {
-  var card = document.getElementById(id);
-  if (card) card.classList.toggle('open');
-}
-
-function toggleVerdict() {
-  document.getElementById('verdictBox').classList.toggle('open');
-}
-
-// ── SEARCH / FILTER ──────────────────────────────────────────────────────────
-
-function filterCards(ns) {
-  var searchId = ns === 'fb' ? 'fbSearch' : 'igSearch';
-  var containerId = ns === 'fb' ? 'fbCards' : 'igCards';
-  var noResultsId = ns === 'fb' ? 'fbNoResults' : 'igNoResults';
-  state[ns].search = document.getElementById(searchId).value.toLowerCase().trim();
-  renderAll(ns === 'fb' ? fbData : igData, containerId, noResultsId, ns);
-}
-
-function setFilter(ns, filter, btn) {
-  state[ns].filter = filter;
-  var parent = btn.closest('.filter-btns');
-  parent.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  filterCards(ns);
-}
-
-// ── INIT ─────────────────────────────────────────────────────────────────────
-
-document.addEventListener('DOMContentLoaded', function() {
-  renderAll(fbData, 'fbCards', 'fbNoResults', 'fb');
-  renderAll(igData, 'igCards', 'igNoResults', 'ig');
-});
-</script>
 </body>
 </html>
